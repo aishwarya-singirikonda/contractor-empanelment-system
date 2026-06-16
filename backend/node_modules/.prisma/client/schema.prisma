@@ -17,36 +17,31 @@ model User {
 }
 
 model Contractor {
-  id          Int      @id @default(autoincrement())
-  name        String
-  companyName String
-  email       String   @unique
-  phone       String
-  address     String
-  status      String   @default("PENDING")
-  createdAt   DateTime @default(now())
-
+  id           Int         @id @default(autoincrement())
+  name         String
+  companyName  String
+  email        String      @unique
+  phone        String
+  address      String
+  status       String      @default("PENDING")
+  createdAt    DateTime    @default(now())
   departmentId Int?
   department   Department? @relation(fields: [departmentId], references: [id])
-
-  documents Document[]
+  documents    Document[]
 }
 
 model Department {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique
-  createdAt DateTime @default(now())
-
+  id          Int          @id @default(autoincrement())
+  name        String       @unique
+  createdAt   DateTime     @default(now())
   contractors Contractor[]
 }
 
 model Document {
-  id           Int    @id @default(autoincrement())
+  id           Int        @id @default(autoincrement())
   title        String
   fileUrl      String
   contractorId Int
-
-  contractor Contractor @relation(fields: [contractorId], references: [id])
-
-  uploadedAt DateTime @default(now())
+  uploadedAt   DateTime   @default(now())
+  contractor   Contractor @relation(fields: [contractorId], references: [id])
 }
