@@ -14,7 +14,7 @@ function Dashboard() {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await api.get("/dashboard/stats", {
+      const response = await api.get("/api/dashboard/stats", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
