@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  role      String
+  createdAt DateTime @default(now())
+}
+
+model Contractor {
+  id          Int      @id @default(autoincrement())
+  name        String
+  companyName String
+  email       String   @unique
+  phone       String
+  address     String
+  status      String   @default("PENDING")
+  createdAt   DateTime @default(now())
+
+  departmentId Int?
+  department   Department? @relation(fields: [departmentId], references: [id])
+
+  documents Document[]
+}
+
+model Department {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+
+  contractors Contractor[]
+}
+
+model Document {
+  id           Int    @id @default(autoincrement())
+  title        String
+  fileUrl      String
+  contractorId Int
+
+  contractor Contractor @relation(fields: [contractorId], references: [id])
+
+  uploadedAt DateTime @default(now())
+}
