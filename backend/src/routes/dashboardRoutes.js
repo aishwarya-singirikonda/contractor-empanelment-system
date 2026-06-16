@@ -9,7 +9,7 @@ const authorize = require("../middleware/roleMiddleware");
 router.get(
   "/stats",
   authMiddleware,
-  authorize("ADMIN"),
+  authorize("admin"),
   getDashboardStats
 );
 
